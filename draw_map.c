@@ -6,55 +6,53 @@
 /*   By: gpoblon <gpoblon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 18:30:03 by gpoblon           #+#    #+#             */
-/*   Updated: 2016/11/25 19:44:35 by gpoblon          ###   ########.fr       */
+/*   Updated: 2016/11/28 22:08:03 by gpoblon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "fdf.h"
 
-// void	ft_connect_points(t_mlx mlx, t_coord p1, t_coord p2)
-// {
-// 	int		pixel;
-// 	t_algo	*math;
-//
-// 	math = (t_algo*)malloc(sizeof(t_algo));
-// 	ft_assign_values(math, p1, p2);
-// 	mlx_pixel_put(mlx.mlx, mlx.win, math->i.x, math->i.y, 0x00FFFFFF);
-// 	if (math->d.x > math->d.y)
-// 	{
-// 	    math->cumul = math->d.x / 2;
-// 		pixel = 0;
-// 	    while (++pixel <= math->d.x)
-// 		{
-// 			math->i.x += math->step.x;
-// 			math->cumul += math->d.y;
-// 			if (math->cumul >= math->d.x)
-// 			{
-// 		    	math->cumul -= math->d.x;
-// 	    		math->i.y += math->step.y;
-// 			}
-// 			mlx_pixel_put(mlx.mlx, mlx.win, math->i.x, math->i.y, 0x00FFFFFF);
-// 	 	}
-// 	}
-//     else
-// 	{
-//     	math->cumul = math->d.y / 2;
-// 		pixel = 0;
-// 		while (++pixel <= math->d.y)
-// 		{
-//     		math->i.y += math->step.y;
-//     		math->cumul += math->d.x;
-//     		if ( math->cumul >= math->d.y)
-// 			{
-//         		math->cumul -= math->d.y;
-//         		math->i.x += math->step.x;
-// 			}
-//     	mlx_pixel_put(mlx.mlx, mlx.win, math->i.x, math->i.y, 0x00FFFFFF);
-// 		}
-// 	}
-// }
+void	ft_print_map(t_tlkit *tlkit, t_input *lst)
+{
+	t_coord	i;
+	t_coord	p1;
+	t_coord	p2;
 
-int		ft_connect_points(t_mlx mlx, t_coord p1, t_coord p2)
+	i.y = -1;
+	while (++i.y < tlkit->map_length)
+	{
+		i.x = -1;
+		while (++i.x < lst->width)
+		{
+			p1 = ft_view(tlkit, i.x, i.y);
+			if (i.x < lst->width - 1)
+			{
+				p2 = ft_view(tlkit, i.x + 1, i.y);
+				ft_connect_points(tlkit, p1, p2, tlkit->tab[i.y][i.x]);
+			}
+			if (i.y < tlkit->map_length - 1)
+			{
+				p2 = ft_view(tlkit, i.x, i.y + 1);
+				ft_connect_points(tlkit, p1, p2, tlkit->tab[i.y][i.x]);
+			}
+		}
+		lst = lst->next;
+	}
+}
+
+t_coord	ft_view(t_tlkit* tlkit, int x, int y)
+{
+	t_coord	view;
+
+	// view.x = (tlkit->spin.x * (x - y) * (tlkit->zoom / 2)) + tlkit->shift.x;
+	// view.y = (tlkit->spin.y * (x + y) * (tlkit->zoom / 2)) + tlkit->shift.y;
+
+	view.x = (x - y) * tlkit->zoom + tlkit->shift.x;
+	view.y = ((y - tlkit->tab[y][x]) + x) * tlkit->zoom + tlkit->shift.y;
+	return (view);
+}
+
+int		ft_connect_points(t_tlkit *tlkit, t_coord p1, t_coord p2, int color)
 {
 	t_algo		math;
 	math.delta.x = ft_abs(p2.x - p1.x);
@@ -62,9 +60,9 @@ int		ft_connect_points(t_mlx mlx, t_coord p1, t_coord p2)
 	math.step.x = (p1.x < p2.x) ? 1 : -1;
 	math.step.y = (p1.y < p2.y) ? 1 : -1;
 	math.err_1 = math.delta.x + math.delta.y;
-	while(1)
+	while (1)
 	{
-		mlx_pixel_put(mlx.mlx, mlx.win, p1.x, p1.y, 0x00FF0000);
+		mlx_pixel_put(tlkit->mlx, tlkit->win, p1.x, p1.y, color + 0x66FFFF);
 		if (p1.x == p2.x && p1.y == p2.y)
 			break ;
 		math.err_2 = math.err_1 * 2;
@@ -81,15 +79,3 @@ int		ft_connect_points(t_mlx mlx, t_coord p1, t_coord p2)
 	}
 	return (0);
 }
-
-// void	ft_assign_values(t_algo *math, t_coord p1, t_coord p2)
-// {
-// 	math->i.x = p1.x * TILE_S;
-// 	math->i.y = p1.y * TILE_S;
-// 	math->d.x = p2.x * TILE_S - p1.x * TILE_S;
-// 	math->d.y = p2.y * TILE_S - p1.y * TILE_S;
-// 	math->step.x = (math->d.x > 0) ? 1 : -1;
-// 	math->step.y = (math->d.y > 0) ? 1 : -1;
-// 	math->d.x = (math->d.x < 0) ? - math->d.x : math->d.x;
-// 	math->d.y = (math->d.y < 0) ? - math->d.y : math->d.y;
-// }

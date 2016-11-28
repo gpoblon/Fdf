@@ -2,7 +2,8 @@ NAME	=	fdf
 
 SRC		=	main.c \
 			input_to_map.c \
-			draw_map.c
+			draw_map.c \
+			keymapping.c
 
 OBJ		=	$(SRC:.c=.o)
 
