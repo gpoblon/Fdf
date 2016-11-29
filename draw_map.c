@@ -6,11 +6,11 @@
 /*   By: gpoblon <gpoblon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 18:30:03 by gpoblon           #+#    #+#             */
-/*   Updated: 2016/11/28 22:08:03 by gpoblon          ###   ########.fr       */
+/*   Updated: 2016/11/29 19:53:37 by gpoblon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "fdf.h"
+#include "fdf.h"
 
 void	ft_print_map(t_tlkit *tlkit, t_input *lst)
 {
@@ -28,33 +28,33 @@ void	ft_print_map(t_tlkit *tlkit, t_input *lst)
 			if (i.x < lst->width - 1)
 			{
 				p2 = ft_view(tlkit, i.x + 1, i.y);
-				ft_connect_points(tlkit, p1, p2, tlkit->tab[i.y][i.x]);
+				ft_connect_points(tlkit, p1, p2, 15 * tlkit->tab[i.y][i.x]);
 			}
-			if (i.y < tlkit->map_length - 1)
+			if (i.y < tlkit->map_length - 1 && i.x < lst->next->width)
 			{
 				p2 = ft_view(tlkit, i.x, i.y + 1);
-				ft_connect_points(tlkit, p1, p2, tlkit->tab[i.y][i.x]);
+				ft_connect_points(tlkit, p1, p2, 15 * tlkit->tab[i.y][i.x]);
 			}
 		}
 		lst = lst->next;
 	}
 }
 
-t_coord	ft_view(t_tlkit* tlkit, int x, int y)
+t_coord	ft_view(t_tlkit *tlkit, int x, int y)
 {
 	t_coord	view;
 
-	// view.x = (tlkit->spin.x * (x - y) * (tlkit->zoom / 2)) + tlkit->shift.x;
-	// view.y = (tlkit->spin.y * (x + y) * (tlkit->zoom / 2)) + tlkit->shift.y;
-
-	view.x = (x - y) * tlkit->zoom + tlkit->shift.x;
-	view.y = ((y - tlkit->tab[y][x]) + x) * tlkit->zoom + tlkit->shift.y;
+	view.x = ((x * tlkit->len.x - y * tlkit->len.y) * tlkit->zoom) *
+			tlkit->iso.x + tlkit->shift.x;
+	view.y = (((y - tlkit->tab[y][x] * tlkit->alti) + x) * tlkit->zoom) *
+			tlkit->iso.y + tlkit->shift.y;
 	return (view);
 }
 
 int		ft_connect_points(t_tlkit *tlkit, t_coord p1, t_coord p2, int color)
 {
 	t_algo		math;
+
 	math.delta.x = ft_abs(p2.x - p1.x);
 	math.delta.y = -ft_abs(p2.y - p1.y);
 	math.step.x = (p1.x < p2.x) ? 1 : -1;
@@ -62,7 +62,7 @@ int		ft_connect_points(t_tlkit *tlkit, t_coord p1, t_coord p2, int color)
 	math.err_1 = math.delta.x + math.delta.y;
 	while (1)
 	{
-		mlx_pixel_put(tlkit->mlx, tlkit->win, p1.x, p1.y, color + 0x66FFFF);
+		mlx_pixel_put(tlkit->mlx, tlkit->win, p1.x, p1.y, color + 0x00777777);
 		if (p1.x == p2.x && p1.y == p2.y)
 			break ;
 		math.err_2 = math.err_1 * 2;
