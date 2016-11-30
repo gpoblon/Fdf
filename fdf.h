@@ -6,7 +6,7 @@
 /*   By: gpoblon <gpoblon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 17:50:10 by gpoblon           #+#    #+#             */
-/*   Updated: 2016/11/29 19:48:12 by gpoblon          ###   ########.fr       */
+/*   Updated: 2016/11/30 18:56:55 by gpoblon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include "./minilibx/mlx.h"
 
 # define WIN_WIDTH		1200
-# define WIN_HEIGHT		900
-# define TILE_LEN		10
+# define WIN_HEIGHT		1000
+# define TILE_LEN		15
 
 # define ESC			53
 # define K_RIGHT		2
@@ -81,7 +81,7 @@ t_input					*ft_newlink(t_input **lst);
 void					ft_check_map(t_input *lst);
 void					ft_char_to_int(t_tlkit *tlkit, t_input *lst);
 
-void					ft_display_map(t_tlkit *tlkit, t_input *input);
+void					ft_display_map(t_tlkit *tlkit);
 void					ft_print_map(t_tlkit *tlkit, t_input *input);
 t_coord					ft_view(t_tlkit *tlkit, int x, int y);
 int						ft_connect_points(t_tlkit *tlkit, t_coord p1,

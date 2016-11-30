@@ -6,7 +6,7 @@
 /*   By: gpoblon <gpoblon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 23:30:55 by gpoblon           #+#    #+#             */
-/*   Updated: 2016/11/30 11:07:25 by gpoblon          ###   ########.fr       */
+/*   Updated: 2016/11/30 18:57:09 by gpoblon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,11 @@ void	ft_char_to_int(t_tlkit *tlkit, t_input *lst)
 		while (++i.x < lst->width)
 		{
 			tlkit->tab[i.y][i.x] = ft_atoi(lst->map[i.x]);
-			ft_putnbr(tlkit->tab[i.y][i.x]);
-			ft_putchar(' ');
 		}
 		if (tlkit->map_length == 1 && tlkit->map_width == 0)
 			ft_exit("Error: empty file.");
 		if (tlkit->map_length == 1 && tlkit->map_width == 1)
 			ft_exit("Error: can't wire anything with only one point.");
 		lst = lst->next;
-		ft_putchar('\n');
 	}
 }

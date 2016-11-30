@@ -6,7 +6,7 @@
 /*   By: gpoblon <gpoblon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 18:30:03 by gpoblon           #+#    #+#             */
-/*   Updated: 2016/11/29 19:53:37 by gpoblon          ###   ########.fr       */
+/*   Updated: 2016/11/30 18:53:29 by gpoblon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int		ft_connect_points(t_tlkit *tlkit, t_coord p1, t_coord p2, int color)
 	math.err_1 = math.delta.x + math.delta.y;
 	while (1)
 	{
-		mlx_pixel_put(tlkit->mlx, tlkit->win, p1.x, p1.y, color + 0x00777777);
 		if (p1.x == p2.x && p1.y == p2.y)
 			break ;
 		math.err_2 = math.err_1 * 2;
@@ -76,6 +75,7 @@ int		ft_connect_points(t_tlkit *tlkit, t_coord p1, t_coord p2, int color)
 			math.err_1 += math.delta.y;
 			p1.x += math.step.x;
 		}
+		mlx_pixel_put(tlkit->mlx, tlkit->win, p1.x, p1.y, color + 0x00777777);
 	}
 	return (0);
 }

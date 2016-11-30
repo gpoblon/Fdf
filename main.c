@@ -6,7 +6,7 @@
 /*   By: gpoblon <gpoblon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 17:16:34 by gpoblon           #+#    #+#             */
-/*   Updated: 2016/11/30 11:05:00 by gpoblon          ###   ########.fr       */
+/*   Updated: 2016/11/30 18:56:48 by gpoblon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ int		main(int ac, char **av)
 	tlkit = (t_tlkit*)malloc(sizeof(t_tlkit));
 	ft_input_to_map(tlkit, &input, fd);
 	tlkit->lstinput = input;
-	ft_display_map(tlkit, input);
+	ft_display_map(tlkit);
 }
 
-void	ft_display_map(t_tlkit *tlkit, t_input *input)
+void	ft_display_map(t_tlkit *tlkit)
 {
 	tlkit->mlx = mlx_init();
 	tlkit->alti = 1.2;
@@ -43,10 +43,7 @@ void	ft_display_map(t_tlkit *tlkit, t_input *input)
 	tlkit->len.y = 1;
 	tlkit->win = mlx_new_window(tlkit->mlx, tlkit->win_size.x,
 				tlkit->win_size.y, "fdf");
-	if (tlkit->map_width == 1)
-		mlx_pixel_put(tlkit->mlx, tlkit->win, 0, 0, 0xFFFF00);
-	ft_print_map(tlkit, input);
+	ft_print_map(tlkit, tlkit->lstinput);
 	mlx_key_hook(tlkit->win, &ft_keymap, tlkit);
-	mlx_clear_window(tlkit->mlx, tlkit->win);
 	mlx_loop(tlkit->mlx);
 }
