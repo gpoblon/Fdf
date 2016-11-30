@@ -6,7 +6,7 @@
 /*   By: gpoblon <gpoblon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 23:30:55 by gpoblon           #+#    #+#             */
-/*   Updated: 2016/11/29 19:54:30 by gpoblon          ###   ########.fr       */
+/*   Updated: 2016/11/30 11:07:25 by gpoblon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_check_map(t_input *lst)
 		while (lst->map[i][j])
 		{
 			if (!ft_isdigit(lst->map[i][j]))
-				ft_exit("Error: non digit character");
+				ft_exit("Error: non digit character or fd error.");
 			++j;
 		}
 		++i;
