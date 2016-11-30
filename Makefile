@@ -8,7 +8,7 @@ SRC		=	main.c \
 OBJ		=	$(SRC:.c=.o)
 
 CC		=	gcc
-# CFLAGS	=	-Werror -Wextra -Wall
+CFLAGS	=	-Werror -Wextra -Wall
 
 LIBLINK	=	-L./libft -lft
 MLX		=	./minilibx/mlx.a
@@ -18,7 +18,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 		make -C ./libft
-		$(CC) $(LIBLINK) $(MLXLINK) -o $(NAME) $(OBJ)
+		$(CC) $(CFLAGS) $(LIBLINK) $(MLXLINK) -o $(NAME) $(OBJ)
 
 clean:
 		rm -rf $(OBJ)
